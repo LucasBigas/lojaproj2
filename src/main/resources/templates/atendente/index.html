@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <head th:include="layout :: head"></head>
+
+    <body>
+        <nav th:replace="layout :: menu"></nav>
+        <main class="container">
+            <a href="/atendentes/novo" class="btn btn-primary">Novo</a>
+            <table class="table" id="tabatendentes">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Sexo</th>
+                        <th>Endereco</th>
+                        <th>Telefone</th>
+                        <th>Data Nascimento</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="umAtendente : ${listaAtendentes}">
+                        <td th:text="${umAtendente.id}"></td>
+                        <td th:text="${umAtendente.nome}"></td>
+                        <td th:text="${umAtendente.sexo}"></td>
+                        <td th:text="${umAtendente.endereco}"></td>
+                        <td th:text="${umAtendente.telefone}"></td>
+                        <td th:text="${#dates.format(umAtendente.dataNascimento, 'dd/MM/yyyy')}"></td>
+                        <td>
+                            <a th:href="@{'/atendentes/alterar/' + ${umAtendente.id}}" class="btn btn-warning">Alterar</a>
+                            <button class="btn btn-danger js-delete" th:data-id="${umAtendente.id}">Excluir</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>   
+        </main>
+        <div class="modal" tabindex="-1" id="modalatendente">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Excluir Atendente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Confirma a exclusão do Atendente?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btnnao" data-bs-dismiss="modal">Não</button>
+                    <button type="button" class="btn btn-primary" id="btnsim">Sim</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <footer th:include="layout :: footer"></footer>
+        <script th:src="@{/atendente.js}"></script>
+    </body>
+</html>

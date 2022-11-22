@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <head th:include="layout :: head"></head>
+
+    <body>
+        <nav th:replace="layout :: menu"></nav>
+        <main class="container">
+            <a href="/comissaovendas/novo/" class="btn btn-primary">Novo</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Data</th>
+                        <th>Valor</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="umaComissao : ${listaComissao}">
+                        <td th:text="${umaComissao.id}"></td>
+                        <td th:text="${#dates.format(umaComissao.data, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${#numbers.formatCurrency(umaComissao.valor)}"></td>
+                        <td><a th:href="@{'/comissaovendas/alterar/' + ${umaComissao.id}}" class="btn btn-warning">Alterar</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+        <footer th:include="layout :: footer"></footer>
+    </body>
+</html>

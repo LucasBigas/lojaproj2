@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <head th:include="layout :: head"></head>
+
+    <body>
+        <nav th:replace="layout :: menu"></nav>
+        <main class="container">
+            
+            <form th:action="@{/cidades/(form)}" method="post" th:object="${cidade}">
+                <input type="hidden" th:field="*{id}">
+
+                <div class="form-group">
+                    <label for="txtnome">Nome:</label>
+                    <input type="text" th:field="*{nome}" id="txtnome" class="form-control">
+                    <p th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="alert alert-danger"></p> 
+                </div>
+
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </main>
+        <footer th:include="layout :: footer"></footer>
+    </body>
+</html>

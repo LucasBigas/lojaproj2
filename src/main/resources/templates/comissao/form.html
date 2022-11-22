@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <head th:include="layout :: head"></head>
+
+    <body>
+        <nav th:replace="layout :: menu"></nav>
+        <main class="container">
+            <form th:action="@{/comissaovendas/(form)}" method="post" th:object="${comissao}">
+                <input type="hidden" th:field="*{id}">
+
+                <div class="form-group">
+                    <label for="txtdata">Data:</label>
+                    <input type="date" th:field="*{data}" class="form-control" id="txtdata">
+                    <p th:if="${#fields.hasErrors('data')}" th:errors="*{data}" class="alert alert-danger"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="txtvalor">Valor:</label>
+                    <input type="text" th:field="*{valor}" class="form-control" id="txtvalor">
+                    <p th:if="${#fields.hasErrors('valor')}" th:errors="*{valor}" class="alert alert-danger"></p>
+
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </main>
+        <footer th:include="layout :: footer"></footer>
+    </body>
+</html>
