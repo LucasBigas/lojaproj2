@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,7 +21,9 @@ public class Venda {
     private long id;
     @Temporal(value = TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Nao pode ser nulo o valor da data")
     private Date data;
+    @Min(value = 1, message = "Precisa ser um numero maior que zero")
     private int numeroVenda;
 
     public long getId() {

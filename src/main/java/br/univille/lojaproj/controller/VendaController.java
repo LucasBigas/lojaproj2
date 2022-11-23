@@ -1,7 +1,10 @@
 package br.univille.lojaproj.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +34,10 @@ public class VendaController {
     }
 
     @PostMapping(params = "form")
-    public ModelAndView save(Venda venda){
+    public ModelAndView save(@Valid Venda venda, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return new ModelAndView("venda/form","venda",venda);
+        }
         service.save(venda);
         return new ModelAndView("redirect:/vendas");
     }

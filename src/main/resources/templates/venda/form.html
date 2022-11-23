@@ -13,11 +13,13 @@
                 <div class="form-group">
                     <label for="txtdata">Data de Venda:</label>
                     <input type="date" th:field="*{data}" class="form-control" id="txtdata">
+                    <p th:if="${#fields.hasErrors('data')}" th:errors="*{data}" class="alert alert-danger"></p> 
                 </div>
 
                 <div class="form-group">
                     <label for="txtnumerovenda">Numero de Venda:</label>
                     <input type="text" th:field="*{numeroVenda}" class="form-control" id="txtnumerovenda">
+                    <p th:if="${#fields.hasErrors('numeroVenda')}" th:errors="*{numeroVenda}" class="alert alert-danger"></p> 
                 </div>
 
                 <button type="submit" class="btn btn-primary">Enviar</button>
