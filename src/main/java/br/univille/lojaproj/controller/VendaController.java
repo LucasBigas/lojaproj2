@@ -1,5 +1,7 @@
 package br.univille.lojaproj.controller;
 
+import java.util.HashMap;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.univille.lojaproj.entity.Venda;
+import br.univille.lojaproj.service.AtendenteService;
+import br.univille.lojaproj.service.ClienteService;
 import br.univille.lojaproj.service.VendaService;
 
 @Controller
@@ -20,6 +24,12 @@ public class VendaController {
     
     @Autowired
     private VendaService service;
+
+    @Autowired
+    private ClienteService clienteService;
+
+    @Autowired
+    private AtendenteService atendenteService;
 
     @GetMapping
     public ModelAndView index(){
@@ -30,13 +40,25 @@ public class VendaController {
     @GetMapping("/novo")
     public ModelAndView novo(){
         var venda = new Venda();
-        return new ModelAndView("venda/form","venda",venda);
+        var listaClientes = clienteService.getAll();
+        var listaAtendentes = atendenteService.getAll();
+        HashMap<String,Object> dados =new HashMap<>();
+        dados.put("venda", venda);
+        dados.put("listaClientes", listaClientes);
+        dados.put("listaAtendentes", listaAtendentes);
+        return new ModelAndView("venda/form",dados);
     }
 
     @PostMapping(params = "form")
     public ModelAndView save(@Valid Venda venda, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return new ModelAndView("venda/form","venda",venda);
+            var listaAtendentes = atendenteService.getAll();
+            var listaClientes = clienteService.getAll();
+            HashMap<String,Object> dados = new HashMap<>();
+            dados.put("venda", venda);
+            dados.put("listaClientes", listaClientes);
+            dados.put("listaAtendentes", listaAtendentes);
+            return new ModelAndView("venda/form",dados);
         }
         service.save(venda);
         return new ModelAndView("redirect:/vendas");
@@ -45,7 +67,13 @@ public class VendaController {
     @GetMapping("/alterar/{id}")
     public ModelAndView alterar(@PathVariable("id") long id){
         var venda = service.findByid(id);
-        return new ModelAndView("venda/form","venda",venda);
+        var listaAtendentes = atendenteService.getAll();
+        var listaClientes = clienteService.getAll();
+        HashMap<String,Object> dados = new HashMap<>();
+        dados.put("venda", venda);
+        dados.put("listaClientes", listaClientes);
+        dados.put("listaAtendentes", listaAtendentes);
+        return new ModelAndView("venda/form",dados);
     }
     
 }

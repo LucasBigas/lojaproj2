@@ -2,11 +2,12 @@ package br.univille.lojaproj.entity;
 
 import java.util.Date;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
@@ -26,8 +27,25 @@ public class Venda {
     @Min(value = 1, message = "Precisa ser um numero maior que zero")
     private int numeroVenda;
 
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    private Cliente comprador;
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    private Atendente vendedor;
+
     public long getId() {
         return id;
+    }
+    public Atendente getVendedor() {
+        return vendedor;
+    }
+    public void setVendedor(Atendente vendedor) {
+        this.vendedor = vendedor;
+    }
+    public Cliente getComprador() {
+        return comprador;
+    }
+    public void setComprador(Cliente comprador) {
+        this.comprador = comprador;
     }
     public void setId(long id) {
         this.id = id;
