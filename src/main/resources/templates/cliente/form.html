@@ -50,9 +50,9 @@
             <div class="form-group">
                 <label>Cidade:</label>
                 <select class="form-select" th:field="*{cidadeResidencia}">
-                    <option th:each="umCidade : ${listaCidades}"
-                    th:text="${umCidade.nome}" 
-                    th:value="${umCidade.id}"></option>
+                    <option th:each="umaCidade : ${listaCidades}"
+                    th:text="${umaCidade.nome}" 
+                    th:value="${umaCidade.id}"></option>
                     
                 </select>
             </div>
