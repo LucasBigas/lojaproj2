@@ -1,6 +1,8 @@
 package br.univille.lojaproj.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -8,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
@@ -32,8 +35,17 @@ public class Venda {
     @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     private Atendente vendedor;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ItemVenda> colItens = new ArrayList<>();
+
     public long getId() {
         return id;
+    }
+    public List<ItemVenda> getColItens() {
+        return colItens;
+    }
+    public void setColItens(List<ItemVenda> colItens) {
+        this.colItens = colItens;
     }
     public Atendente getVendedor() {
         return vendedor;
