@@ -17,6 +17,7 @@
                         <th>Numero da Venda</th>
                         <th>Comprador</th>
                         <th>Vendedor</th>
+                        <th>Valor Ttotal</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -27,6 +28,7 @@
                         <td th:text="${umaVenda.numeroVenda}"></td>
                         <td th:text="${umaVenda.comprador?.nome}"></td>
                         <td th:text="${umaVenda.vendedor?.nome}"></td>
+                        <td th:text="${#numbers.formatCurrency(#aggregates.sum(umaVenda.colItens.![getValorFinal]))}"></td>
                     </tr>
                 </tbody>
             </table>
