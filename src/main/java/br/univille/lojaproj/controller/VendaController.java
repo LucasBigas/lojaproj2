@@ -8,14 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.univille.lojaproj.entity.ItemVenda;
 import br.univille.lojaproj.entity.Venda;
 import br.univille.lojaproj.service.AtendenteService;
 import br.univille.lojaproj.service.ClienteService;
+import br.univille.lojaproj.service.ProdutoService;
 import br.univille.lojaproj.service.VendaService;
 
 @Controller
@@ -31,6 +33,9 @@ public class VendaController {
     @Autowired
     private AtendenteService atendenteService;
 
+    @Autowired
+    private ProdutoService produtoService;
+
     @GetMapping
     public ModelAndView index(){
         var listaVendas = service.getAll();
@@ -42,14 +47,17 @@ public class VendaController {
         var venda = new Venda();
         var listaClientes = clienteService.getAll();
         var listaAtendentes = atendenteService.getAll();
+        var listaProdutos = produtoService.getAll();
         HashMap<String,Object> dados =new HashMap<>();
         dados.put("venda", venda);
         dados.put("listaClientes", listaClientes);
         dados.put("listaAtendentes", listaAtendentes);
+        dados.put("listaProdutos", listaProdutos);
+        dados.put("novoItem", new ItemVenda());
         return new ModelAndView("venda/form",dados);
     }
 
-    @PostMapping(params = "form")
+    @PostMapping(params = "save")
     public ModelAndView save(@Valid Venda venda, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             var listaAtendentes = atendenteService.getAll();
@@ -64,15 +72,33 @@ public class VendaController {
         return new ModelAndView("redirect:/vendas");
     }
 
-    @GetMapping("/alterar/{id}")
-    public ModelAndView alterar(@PathVariable("id") long id){
-        var venda = service.findByid(id);
+    @PostMapping(params = "incitem")
+    public ModelAndView incluirItem(Venda venda, ItemVenda novoItem){
+        venda.getColItens().add(novoItem);
         var listaAtendentes = atendenteService.getAll();
         var listaClientes = clienteService.getAll();
+        var listaProdutos = produtoService.getAll();
         HashMap<String,Object> dados = new HashMap<>();
         dados.put("venda", venda);
         dados.put("listaClientes", listaClientes);
         dados.put("listaAtendentes", listaAtendentes);
+        dados.put("listaProdutos", listaProdutos);
+        dados.put("novoItem", new ItemVenda());
+        return new ModelAndView("venda/form",dados);
+    }
+
+    @PostMapping(params = "removeitem")
+    public ModelAndView removerItem(@RequestParam("removeitem") int index, Venda venda){
+        venda.getColItens().remove(index);
+        var listaClientes = clienteService.getAll();
+        var listaAtendentes = atendenteService.getAll();
+        var listaProdutos = produtoService.getAll();
+        HashMap<String,Object> dados = new HashMap<>();
+        dados.put("venda", venda);
+        dados.put("listaClientes", listaClientes);
+        dados.put("listaProdutos", listaProdutos);
+        dados.put("listaAtendentes", listaAtendentes);
+        dados.put("novoItem", new ItemVenda());
         return new ModelAndView("venda/form",dados);
     }
     

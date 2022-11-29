@@ -18,6 +18,12 @@ public class ItemVenda {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private Produto produto;
 
+    public Produto getProduto() {
+        return produto;
+    }
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
     public long getId() {
         return id;
     }

@@ -27,7 +27,6 @@
                         <td th:text="${umaVenda.numeroVenda}"></td>
                         <td th:text="${umaVenda.comprador?.nome}"></td>
                         <td th:text="${umaVenda.vendedor?.nome}"></td>
-                        <td><a th:href="@{'/vendas/alterar/' + ${umaVenda.id}}" class="btn btn-warning">Alterar</a></td>
                     </tr>
                 </tbody>
             </table>

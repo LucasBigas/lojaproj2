@@ -40,7 +40,74 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Itens de Venda Vinculados
+                        </h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Quantidade</th>
+                                    <th>Valor</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="umItem, stat : *{colItens}">
+                                    <td th:text="${umItem.produto?.nome}"></td>
+                                    <input type="hidden" th:field="*{colItens[__${stat.index}__].produto}">
+                                    <td th:text="${umItem.quantidade}"></td>
+                                    <input type="hidden" th:field="*{colItens[__${stat.index}__].quantidade}">
+                                    <td th:text="${#numbers.formatCurrency(umItem.valorVenda)}"></td>
+                                    <input type="hidden" th:field="*{colItens[__${stat.index}__].valorVenda}">
+                                    <td>
+                                        <button class="btn btn-danger" type="submit" name="removeitem" th:value="__${stat.index}__">Remover</button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Novo Item de Venda
+                        </h5>
+
+                        <div class="form-group">
+                            <label for="cbproduto">Produto:</label>
+                            <select class="form-select" id="cbproduto"
+                                th:field="${novoItem.produto}">
+                                <option th:each="umProduto : ${listaProdutos}"
+                                    th:value="${umProduto.id}"
+                                    th:text="${umProduto.nome}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtQuantidade">Quantidade:</label>
+                            <input type="number" id="txtQuantidade"
+                                class="form-control"
+                                th:field="${novoItem.quantidade}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtValorVenda">Valor da Venda:</label>
+                            <input type="number" id="txtValorVenda"
+                                class="form-control"
+                                th:field="${novoItem.valorVenda}">
+                        </div>
+
+                        <button type="submit" name="incitem"
+                            class="btn btn-primary">Adicionar Item</button>
+                    </div>
+                </div>
+
+                <button type="submit" name="save" class="btn btn-primary">Enviar</button>
             </form>
         </main>
         <footer th:include="layout :: footer"></footer>
