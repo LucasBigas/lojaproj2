@@ -38,8 +38,17 @@ public class Venda {
     @OneToMany(cascade = CascadeType.ALL)
     private List<ItemVenda> colItens = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Pagamento> pagamentos = new ArrayList<>();
+
     public long getId() {
         return id;
+    }
+    public List<Pagamento> getPagamentos() {
+        return pagamentos;
+    }
+    public void setPagamentos(List<Pagamento> pagamentos) {
+        this.pagamentos = pagamentos;
     }
     public List<ItemVenda> getColItens() {
         return colItens;

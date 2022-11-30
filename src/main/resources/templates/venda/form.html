@@ -107,6 +107,68 @@
                     </div>
                 </div>
 
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Pagamentos Vinculados
+                        </h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Valor Total</th>
+                                    <th>Tipo</th>
+                                    <th>Data</th>
+                                    <th>Numero de Parcelas</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="umPagamento, stat : *{pagamentos}">
+                                    <td th:text="${#numbers.formatCurrency(umPagamento.valorTotal)}"></td>
+                                    <input type="hidden" th:field="*{pagamentos[__${stat.index}__].valorTotal}">
+                                    <td th:text="${umPagamento.tipo}"></td>
+                                    <input type="hidden" th:field="*{pagamentos[__${stat.index}__].tipo}">
+                                    <td th:text="${#dates.format(umPagamento.data, 'dd/MM/yyyy')}"></td>
+                                    <input type="hidden" th:field="*{pagamentos[__${stat.index}__].data}">
+                                    <td th:text="${umPagamento.numeroParcelas}"></td>
+                                    <input type="hidden" th:field="*{pagamentos[__${stat.index}__].numeroParcelas}">
+                                    <td> <button class="btn btn-danger" type="submit" name="removeitem" th:value="__${stat.index}__">Remover</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Novo Pagamento
+                        </h5>
+
+                        <div class="form-group">
+                            <label for="txtvalorTotal">Valor Total:</label>
+                            <input type="number" id="txtvalorTotal" class="form-control" th:field="${novoPagamento.valorTotal}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txttipo">Tipo:</label>
+                            <input type="text" id="txttipo" class="form-control" th:field="${novoPagamento.tipo}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtdata">Data:</label>
+                            <input type="date" id="txtdata" class="form-control" th:field="${novoPagamento.data}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtnumeroParcelas">Numero de Parcelas:</label>
+                            <input type="number" id="txtnumeroParcelas" class="form-control" th:field="${novoPagamento.numeroParcelas}">
+                        </div>
+
+                        <button type="submit" name="incitem" class="btn btn-primary">Adicionar Item</button>
+                    </div>
+                </div>
+
                 <button type="submit" name="save" class="btn btn-primary">Enviar</button>
             </form>
         </main>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.univille.lojaproj.entity.ItemVenda;
+import br.univille.lojaproj.entity.Pagamento;
 import br.univille.lojaproj.entity.Venda;
 import br.univille.lojaproj.service.AtendenteService;
 import br.univille.lojaproj.service.ClienteService;
@@ -36,6 +37,8 @@ public class VendaController {
     @Autowired
     private ProdutoService produtoService;
 
+  
+
     @GetMapping
     public ModelAndView index(){
         var listaVendas = service.getAll();
@@ -54,6 +57,7 @@ public class VendaController {
         dados.put("listaAtendentes", listaAtendentes);
         dados.put("listaProdutos", listaProdutos);
         dados.put("novoItem", new ItemVenda());
+        dados.put("novoPagamento", new Pagamento());
         return new ModelAndView("venda/form",dados);
     }
 
@@ -73,8 +77,9 @@ public class VendaController {
     }
 
     @PostMapping(params = "incitem")
-    public ModelAndView incluirItem(Venda venda, ItemVenda novoItem){
+    public ModelAndView incluirItem(Venda venda, ItemVenda novoItem, Pagamento novoPagamento){
         venda.getColItens().add(novoItem);
+        venda.getPagamentos().add(novoPagamento);
         var listaAtendentes = atendenteService.getAll();
         var listaClientes = clienteService.getAll();
         var listaProdutos = produtoService.getAll();
@@ -84,6 +89,7 @@ public class VendaController {
         dados.put("listaAtendentes", listaAtendentes);
         dados.put("listaProdutos", listaProdutos);
         dados.put("novoItem", new ItemVenda());
+        dados.put("novoPagamento", new Pagamento());
         return new ModelAndView("venda/form",dados);
     }
 
