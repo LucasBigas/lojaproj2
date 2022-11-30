@@ -94,8 +94,9 @@ public class VendaController {
     }
 
     @PostMapping(params = "removeitem")
-    public ModelAndView removerItem(@RequestParam("removeitem") int index, Venda venda){
+    public ModelAndView removerItem(@RequestParam("removeitem") int index, Venda venda, Pagamento novPagamento){
         venda.getColItens().remove(index);
+        venda.getPagamentos().remove(index);
         var listaClientes = clienteService.getAll();
         var listaAtendentes = atendenteService.getAll();
         var listaProdutos = produtoService.getAll();
@@ -105,6 +106,7 @@ public class VendaController {
         dados.put("listaProdutos", listaProdutos);
         dados.put("listaAtendentes", listaAtendentes);
         dados.put("novoItem", new ItemVenda());
+        dados.put("novoPagamento", new Pagamento());
         return new ModelAndView("venda/form",dados);
     }
     
