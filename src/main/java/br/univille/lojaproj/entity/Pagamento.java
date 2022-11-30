@@ -55,5 +55,13 @@ public class Pagamento {
         this.numeroParcelas = numeroParcelas;
     }
 
+    public float valorPagamento(){
+        return getNumeroParcelas() * getValorTotal();
+    }
+
+    public float valorParcela(){
+        return getValorTotal() / getNumeroParcelas();
+    }
+
     
 }
