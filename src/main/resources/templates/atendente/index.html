@@ -17,6 +17,7 @@
                         <th>Endereco</th>
                         <th>Telefone</th>
                         <th>Data Nascimento</th>
+                        <th>Cidade</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -28,6 +29,7 @@
                         <td th:text="${umAtendente.endereco}"></td>
                         <td th:text="${umAtendente.telefone}"></td>
                         <td th:text="${#dates.format(umAtendente.dataNascimento, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${umAtendente.cidadeResidencia?.nome}"></td>
                         <td>
                             <a th:href="@{'/atendentes/alterar/' + ${umAtendente.id}}" class="btn btn-warning">Alterar</a>
                             <button class="btn btn-danger js-delete" th:data-id="${umAtendente.id}">Excluir</button>
