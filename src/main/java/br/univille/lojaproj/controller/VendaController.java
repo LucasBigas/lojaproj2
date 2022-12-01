@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,6 +54,24 @@ public class VendaController {
         var listaProdutos = produtoService.getAll();
         HashMap<String,Object> dados =new HashMap<>();
         dados.put("venda", venda);
+        dados.put("alterar", true);
+        dados.put("listaClientes", listaClientes);
+        dados.put("listaAtendentes", listaAtendentes);
+        dados.put("listaProdutos", listaProdutos);
+        dados.put("novoItem", new ItemVenda());
+        dados.put("novoPagamento", new Pagamento());
+        return new ModelAndView("venda/form",dados);
+    }
+
+    @GetMapping("/{id}")
+    public ModelAndView consulta(@PathVariable long id){
+        var venda = service.findByid(id);
+        var listaClientes = clienteService.getAll();
+        var listaAtendentes = atendenteService.getAll();
+        var listaProdutos = produtoService.getAll();
+        HashMap<String,Object> dados =new HashMap<>();
+        dados.put("alterar", false);
+        dados.put("venda", venda);
         dados.put("listaClientes", listaClientes);
         dados.put("listaAtendentes", listaAtendentes);
         dados.put("listaProdutos", listaProdutos);
@@ -79,12 +98,13 @@ public class VendaController {
     @PostMapping(params = "incitem")
     public ModelAndView incluirItem(Venda venda, ItemVenda novoItem, Pagamento novoPagamento){
         venda.getColItens().add(novoItem);
-        venda.getPagamentos().add(novoPagamento);
+        
         var listaAtendentes = atendenteService.getAll();
         var listaClientes = clienteService.getAll();
         var listaProdutos = produtoService.getAll();
         HashMap<String,Object> dados = new HashMap<>();
         dados.put("venda", venda);
+        dados.put("alterar", true);
         dados.put("listaClientes", listaClientes);
         dados.put("listaAtendentes", listaAtendentes);
         dados.put("listaProdutos", listaProdutos);
@@ -93,8 +113,27 @@ public class VendaController {
         return new ModelAndView("venda/form",dados);
     }
 
+    @PostMapping(params = "incpagto")
+    public ModelAndView incluirPagto(Venda venda, ItemVenda novoItem, Pagamento novoPagamento){
+        venda.getPagamentos().add(novoPagamento);
+        var listaAtendentes = atendenteService.getAll();
+        var listaClientes = clienteService.getAll();
+        var listaProdutos = produtoService.getAll();
+        HashMap<String,Object> dados = new HashMap<>();
+        dados.put("venda", venda);
+        dados.put("alterar", true);
+        dados.put("listaClientes", listaClientes);
+        dados.put("listaAtendentes", listaAtendentes);
+        dados.put("listaProdutos", listaProdutos);
+        dados.put("novoItem", new ItemVenda());
+        dados.put("novoPagamento", new Pagamento());
+        return new ModelAndView("venda/form",dados);
+    }
+
+    
+
     @PostMapping(params = "removeitem")
-    public ModelAndView removerItem(@RequestParam("removeitem") int index, Venda venda, Pagamento novPagamento){
+    public ModelAndView removerItem(@RequestParam("removeitem") int index, Venda venda){
         venda.getColItens().remove(index);
         venda.getPagamentos().remove(index);
         var listaClientes = clienteService.getAll();
@@ -102,6 +141,24 @@ public class VendaController {
         var listaProdutos = produtoService.getAll();
         HashMap<String,Object> dados = new HashMap<>();
         dados.put("venda", venda);
+        dados.put("alterar", true);
+        dados.put("listaClientes", listaClientes);
+        dados.put("listaProdutos", listaProdutos);
+        dados.put("listaAtendentes", listaAtendentes);
+        dados.put("novoItem", new ItemVenda());
+        dados.put("novoPagamento", new Pagamento());
+        return new ModelAndView("venda/form",dados);
+    }
+
+    @PostMapping(params = "removepagto")
+    public ModelAndView removerPagto(@RequestParam("removepagto") int index, Venda venda){
+        venda.getPagamentos().remove(index);
+        var listaClientes = clienteService.getAll();
+        var listaAtendentes = atendenteService.getAll();
+        var listaProdutos = produtoService.getAll();
+        HashMap<String,Object> dados = new HashMap<>();
+        dados.put("venda", venda);
+        dados.put("alterar", true);
         dados.put("listaClientes", listaClientes);
         dados.put("listaProdutos", listaProdutos);
         dados.put("listaAtendentes", listaAtendentes);

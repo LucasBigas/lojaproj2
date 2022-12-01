@@ -63,7 +63,7 @@
                                     <td th:text="${#numbers.formatCurrency(umItem.valorVenda)}"></td>
                                     <input type="hidden" th:field="*{colItens[__${stat.index}__].valorVenda}">
                                     <td>
-                                        <button class="btn btn-danger" type="submit" name="removeitem" th:value="__${stat.index}__">Remover</button>
+                                        <button th:if="${alterar}" class="btn btn-danger" type="submit" name="removeitem" th:value="__${stat.index}__">Remover</button>
                                     </td>
 
                                 </tr>
@@ -103,7 +103,7 @@
                         </div>
 
                         <button type="submit" name="incitem"
-                            class="btn btn-primary">Adicionar Item</button>
+                        th:if="${alterar}" class="btn btn-primary">Adicionar Item</button>
                     </div>
                 </div>
 
@@ -132,7 +132,7 @@
                                     <input type="hidden" th:field="*{pagamentos[__${stat.index}__].data}">
                                     <td th:text="${umPagamento.numeroParcelas}"></td>
                                     <input type="hidden" th:field="*{pagamentos[__${stat.index}__].numeroParcelas}">
-                                    <td> <button class="btn btn-danger" type="submit" name="removeitem" th:value="__${stat.index}__">Remover</button></td>
+                                    <td><button  th:if="${alterar}" class="btn btn-danger" type="submit" name="removepagto" th:value="__${stat.index}__">Remover</button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -165,11 +165,11 @@
                             <input type="number" id="txtnumeroParcelas" class="form-control" th:field="${novoPagamento.numeroParcelas}">
                         </div>
 
-                        <button type="submit" name="incitem" class="btn btn-primary">Adicionar Item</button>
+                        <button th:if="${alterar}" type="submit" name="incpagto" class="btn btn-primary">Adicionar Item</button>
                     </div>
                 </div>
 
-                <button type="submit" name="save" class="btn btn-primary">Enviar</button>
+                <button th:if="${alterar}" type="submit" name="save" class="btn btn-primary">Enviar</button>
             </form>
         </main>
         <footer th:include="layout :: footer"></footer>

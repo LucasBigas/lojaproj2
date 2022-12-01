@@ -56,11 +56,11 @@ public class Pagamento {
     }
 
     public float valorPagamento(){
-        return getNumeroParcelas() * getValorTotal();
+        return  getValorTotal();
     }
 
     public float valorParcela(){
-        return getValorTotal() / getNumeroParcelas();
+        return ((getNumeroParcelas() == 0)? 0 : getValorTotal() / getNumeroParcelas());
     }
 
     

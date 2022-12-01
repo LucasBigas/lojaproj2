@@ -19,7 +19,6 @@
                         <th>Vendedor</th>
                         <th>Valor Total</th>
                         <th>Valor do Pagamento</th>
-                        <th>Valor da parcelas</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -32,7 +31,7 @@
                         <td th:text="${umaVenda.vendedor?.nome}"></td>
                         <td th:text="${#numbers.formatCurrency(#aggregates.sum(umaVenda.colItens.![getValorFinal]))}"></td>
                         <td th:text="${#numbers.formatCurrency(#aggregates.sum(umaVenda.pagamentos.![valorPagamento]))}"></td>
-                        <td th:text="${#numbers.formatCurrency(#aggregates.sum(umaVenda.pagamentos.![valorParcela]))}"></td>
+                        <td><a th:href="@{'/vendas/' + ${umaVenda.id}}" class="btn btn-warning">Consultar</a></td>
                     </tr>
                 </tbody>
             </table>

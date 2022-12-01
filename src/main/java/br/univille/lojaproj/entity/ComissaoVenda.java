@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -27,8 +28,16 @@ public class ComissaoVenda {
 
     @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     private Atendente vendedor;
+    @OneToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    private Venda venda;
     
 
+    public Venda getVenda() {
+        return venda;
+    }
+    public void setVenda(Venda venda) {
+        this.venda = venda;
+    }
     public long getId() {
         return id;
     }
