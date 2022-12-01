@@ -38,6 +38,7 @@ public class ComissaoVendaController {
         var comissao = new ComissaoVenda();
         var listaAtendentes = atendenteService.getAll();
         HashMap<String,Object> dados = new HashMap<>();
+        dados.put("alterar", true);
         dados.put("comissao", comissao);
         dados.put("listaAtendentes", listaAtendentes);
         return new ModelAndView("comissao/form",dados);
@@ -57,11 +58,12 @@ public class ComissaoVendaController {
         return new ModelAndView("redirect:/comissaovendas");
     }
 
-    @GetMapping("/alterar/{id}")
-    public ModelAndView alterar(@PathVariable("id") long id){
+    @GetMapping("/{id}")
+    public ModelAndView alterar(@PathVariable long id){
         var umaComissao = service.findById(id);
         var listaAtendentes = atendenteService.getAll();
         HashMap<String,Object> dados = new HashMap<>();
+        dados.put("alterar", false);
         dados.put("comissao", umaComissao);
         dados.put("listaAtendentes", listaAtendentes);
         return new ModelAndView("comissao/form",dados);

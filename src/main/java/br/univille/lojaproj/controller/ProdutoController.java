@@ -35,6 +35,7 @@ public class ProdutoController {
         var produto = new Produto();
         var listaCidades = cidadeService.getAll();
         HashMap<String,Object> dados = new HashMap<>();
+        dados.put("alterar", true);
         dados.put("produto", produto);
         dados.put("listaCidades", listaCidades);
         return new ModelAndView("produto/form",dados);
@@ -46,11 +47,12 @@ public class ProdutoController {
         return new ModelAndView("redirect:/produtos");
     }
 
-    @GetMapping("/alterar/{id}")
-    public ModelAndView alterar(@PathVariable("id")long id){
+    @GetMapping("/{id}")
+    public ModelAndView consulta(@PathVariable long id){
         var produto = service.findById(id);
         var listaCidades = cidadeService.getAll();
         HashMap<String,Object> dados = new HashMap<>();
+        dados.put("alterar", false);
         dados.put("produto", produto);
         dados.put("listaCidades", listaCidades);
         return new ModelAndView("produto/form",dados);

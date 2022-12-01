@@ -24,7 +24,7 @@
                         <td th:text="${#dates.format(umaComissao.data, 'dd/MM/yyyy')}"></td>
                         <td th:text="${#numbers.formatCurrency(umaComissao.valor)}"></td>
                         <td th:text="${umaComissao.vendedor?.nome}"></td>
-                        <td><a th:href="@{'/comissaovendas/alterar/' + ${umaComissao.id}}" class="btn btn-warning">Alterar</a></td>
+                        <td><a th:href="@{'/comissaovendas/' + ${umaComissao.id}}" class="btn btn-warning">Consultar</a></td>
                     </tr>
                 </tbody>
             </table>
