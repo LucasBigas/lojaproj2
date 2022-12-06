@@ -22,6 +22,16 @@ public class HomeController {
 
     @Autowired
     private CidadeService cidadeService;
+
+    @GetMapping
+    public ModelAndView index(){
+        return new ModelAndView("home/index");
+    }
+
+    @GetMapping("/produto")
+    public ModelAndView prod(){
+        return new ModelAndView("home/produto");
+    }
     
     @GetMapping("/cadastro")
     public ModelAndView cadastro(){
