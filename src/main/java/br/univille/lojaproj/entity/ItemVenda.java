@@ -1,9 +1,11 @@
 package br.univille.lojaproj.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class ItemVenda {
@@ -13,6 +15,15 @@ public class ItemVenda {
     private int quantidade;
     private float valorVenda;
 
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    private Produto produto;
+
+    public Produto getProduto() {
+        return produto;
+    }
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
     public long getId() {
         return id;
     }
@@ -31,6 +42,10 @@ public class ItemVenda {
     public void setValorVenda(float valorVenda) {
         this.valorVenda = valorVenda;
     }
+
+    public float getValorFinal(){
+        return getQuantidade() * getValorVenda();
+    }    
 
     
 }

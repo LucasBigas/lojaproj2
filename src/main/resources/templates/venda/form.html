@@ -13,14 +13,163 @@
                 <div class="form-group">
                     <label for="txtdata">Data de Venda:</label>
                     <input type="date" th:field="*{data}" class="form-control" id="txtdata">
+                    <p th:if="${#fields.hasErrors('data')}" th:errors="*{data}" class="alert alert-danger"></p> 
                 </div>
 
                 <div class="form-group">
                     <label for="txtnumerovenda">Numero de Venda:</label>
                     <input type="text" th:field="*{numeroVenda}" class="form-control" id="txtnumerovenda">
+                    <p th:if="${#fields.hasErrors('numeroVenda')}" th:errors="*{numeroVenda}" class="alert alert-danger"></p> 
                 </div>
 
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <div class="form-group">
+                    <label>Comprador:</label>
+                    <select class="form-select" th:field="*{comprador}">
+                        <option th:each="umCliente : ${listaClientes}"
+                        th:text="${umCliente.nome}"
+                        th:value="${umCliente.id}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Vendedor:</label>
+                    <select class="form-select" th:field="*{vendedor}">
+                        <option th:each="umAtendente : ${listaAtendentes}"
+                        th:text="${umAtendente.nome}"
+                        th:value="${umAtendente.id}"></option>
+                    </select>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Itens de Venda Vinculados
+                        </h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Quantidade</th>
+                                    <th>Valor</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="umItem, stat : *{colItens}">
+                                    <td th:text="${umItem.produto?.nome}"></td>
+                                    <input type="hidden" th:field="*{colItens[__${stat.index}__].produto}">
+                                    <td th:text="${umItem.quantidade}"></td>
+                                    <input type="hidden" th:field="*{colItens[__${stat.index}__].quantidade}">
+                                    <td th:text="${#numbers.formatCurrency(umItem.valorVenda)}"></td>
+                                    <input type="hidden" th:field="*{colItens[__${stat.index}__].valorVenda}">
+                                    <td>
+                                        <button th:if="${alterar}" class="btn btn-danger" type="submit" name="removeitem" th:value="__${stat.index}__">Remover</button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Novo Item de Venda
+                        </h5>
+
+                        <div class="form-group">
+                            <label for="cbproduto">Produto:</label>
+                            <select class="form-select" id="cbproduto"
+                                th:field="${novoItem.produto}">
+                                <option th:each="umProduto : ${listaProdutos}"
+                                    th:value="${umProduto.id}"
+                                    th:text="${umProduto.nome}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtQuantidade">Quantidade:</label>
+                            <input type="number" id="txtQuantidade"
+                                class="form-control"
+                                th:field="${novoItem.quantidade}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtValorVenda">Valor da Venda:</label>
+                            <input type="number" id="txtValorVenda"
+                                class="form-control"
+                                th:field="${novoItem.valorVenda}">
+                        </div>
+
+                        <button type="submit" name="incitem"
+                        th:if="${alterar}" class="btn btn-primary">Adicionar Item</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Pagamentos Vinculados
+                        </h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Valor Total</th>
+                                    <th>Tipo</th>
+                                    <th>Data</th>
+                                    <th>Numero de Parcelas</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="umPagamento, stat : *{pagamentos}">
+                                    <td th:text="${#numbers.formatCurrency(umPagamento.valorTotal)}"></td>
+                                    <input type="hidden" th:field="*{pagamentos[__${stat.index}__].valorTotal}">
+                                    <td th:text="${umPagamento.tipo}"></td>
+                                    <input type="hidden" th:field="*{pagamentos[__${stat.index}__].tipo}">
+                                    <td th:text="${#dates.format(umPagamento.data, 'dd/MM/yyyy')}"></td>
+                                    <input type="hidden" th:field="*{pagamentos[__${stat.index}__].data}">
+                                    <td th:text="${umPagamento.numeroParcelas}"></td>
+                                    <input type="hidden" th:field="*{pagamentos[__${stat.index}__].numeroParcelas}">
+                                    <td><button  th:if="${alterar}" class="btn btn-danger" type="submit" name="removepagto" th:value="__${stat.index}__">Remover</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Novo Pagamento
+                        </h5>
+
+                        <div class="form-group">
+                            <label for="txtvalorTotal">Valor Total:</label>
+                            <input type="number" id="txtvalorTotal" class="form-control" th:field="${novoPagamento.valorTotal}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txttipo">Tipo:</label>
+                            <input type="text" id="txttipo" class="form-control" th:field="${novoPagamento.tipo}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtdata">Data:</label>
+                            <input type="date" id="txtdata" class="form-control" th:field="${novoPagamento.data}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtnumeroParcelas">Numero de Parcelas:</label>
+                            <input type="number" id="txtnumeroParcelas" class="form-control" th:field="${novoPagamento.numeroParcelas}">
+                        </div>
+
+                        <button th:if="${alterar}" type="submit" name="incpagto" class="btn btn-primary">Adicionar Item</button>
+                    </div>
+                </div>
+
+                <button th:if="${alterar}" type="submit" name="save" class="btn btn-primary">Enviar</button>
             </form>
         </main>
         <footer th:include="layout :: footer"></footer>

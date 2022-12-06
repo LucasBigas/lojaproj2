@@ -1,5 +1,7 @@
 package br.univille.lojaproj.controller;
 
+import java.util.HashMap;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.univille.lojaproj.entity.Atendente;
 import br.univille.lojaproj.service.AtendenteService;
+import br.univille.lojaproj.service.CidadeService;
 
 @Controller
 @RequestMapping("/atendentes")
@@ -20,6 +23,9 @@ public class AtendenteController {
 
     @Autowired
     private AtendenteService service;
+
+    @Autowired
+    private CidadeService cidadeService;
 
     @GetMapping
     public ModelAndView index(){
@@ -30,13 +36,21 @@ public class AtendenteController {
     @GetMapping("/novo")
     public ModelAndView novo(){
         var atendente = new Atendente();
-        return new ModelAndView("atendente/form","atendente",atendente);
+        var listaCidades = cidadeService.getAll();
+        HashMap<String,Object> dados = new HashMap<>();
+        dados.put("atendente", atendente);
+        dados.put("listaCidades", listaCidades);
+        return new ModelAndView("atendente/form",dados);
     }
 
     @PostMapping(params = "form")
     public ModelAndView save(@Valid Atendente atendente, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return new ModelAndView("atendente/form","atendente",atendente);
+            var listaCidades = cidadeService.getAll();
+            HashMap<String,Object> dados = new HashMap<>();
+            dados.put("atendente", atendente);
+            dados.put("listaCidades", listaCidades);
+            return new ModelAndView("atendente/form",dados);
         }
         service.save(atendente);
         return new ModelAndView("redirect:/atendentes");
@@ -45,7 +59,11 @@ public class AtendenteController {
     @GetMapping("/alterar/{id}")
     public ModelAndView alterar(@PathVariable("id") long id){
         var atendente = service.findById(id);
-        return new ModelAndView("atendente/form","atendente",atendente);
+        var listaCidades = cidadeService.getAll();
+        HashMap<String,Object> dados = new HashMap<>();
+        dados.put("atendente", atendente);
+        dados.put("listaCidades", listaCidades);
+        return new ModelAndView("atendente/form",dados);
     }
     @GetMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable("id")long id){

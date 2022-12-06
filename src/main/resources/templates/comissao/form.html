@@ -20,9 +20,15 @@
                     <label for="txtvalor">Valor:</label>
                     <input type="text" th:field="*{valor}" class="form-control" id="txtvalor">
                     <p th:if="${#fields.hasErrors('valor')}" th:errors="*{valor}" class="alert alert-danger"></p>
-
                 </div>
-                <button type="submit" class="btn btn-primary">Enviar</button>
+
+                <div class="form-group">
+                    <label>Vendedor:</label>
+                    <select class="form-select" th:field="*{vendedor}">
+                        <option th:each="umAtendente : ${listaAtendentes}" th:text="${umAtendente.nome}" th:value="${umAtendente.id}"></option>
+                    </select>
+                </div>
+                <button th:if="${alterar}" type="submit" class="btn btn-primary">Enviar</button>
             </form>
         </main>
         <footer th:include="layout :: footer"></footer>

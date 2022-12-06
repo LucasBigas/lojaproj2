@@ -24,7 +24,16 @@
                     <label for="txtvalor">Valor:</label>
                     <input type="text" th:field="*{valor}" class="form-control" id="txtvalor">
                 </div>
-                <button type="submit" class="btn btn-primary">Enviar</button>
+
+                <div class="form-group">
+                    <label>Cidade:</label>
+                    <select class="form-select" th:field="*{cidadeOrigem}">
+                        <option th:each="umaCidade : ${listaCidades}" th:text="${umaCidade.nome}"
+                        th:value="${umaCidade.id}"></option>
+                    </select>
+
+                </div>
+                <button  th:if="${alterar}" type="submit" class="btn btn-primary">Enviar</button>
             </form>
         </main>
         <footer th:include="layout :: footer"></footer>
