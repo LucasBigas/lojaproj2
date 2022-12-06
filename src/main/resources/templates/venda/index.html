@@ -15,6 +15,10 @@
                         <th>ID</th>
                         <th>Data da Venda</th>
                         <th>Numero da Venda</th>
+                        <th>Comprador</th>
+                        <th>Vendedor</th>
+                        <th>Valor Total</th>
+                        <th>Valor do Pagamento</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -23,7 +27,11 @@
                         <td th:text="${umaVenda.id}"></td>
                         <td th:text="${umaVenda.data}"></td>
                         <td th:text="${umaVenda.numeroVenda}"></td>
-                        <td><a th:href="@{'/vendas/alterar/' + ${umaVenda.id}}" class="btn btn-warning">Alterar</a></td>
+                        <td th:text="${umaVenda.comprador?.nome}"></td>
+                        <td th:text="${umaVenda.vendedor?.nome}"></td>
+                        <td th:text="${#numbers.formatCurrency(#aggregates.sum(umaVenda.colItens.![getValorFinal]))}"></td>
+                        <td th:text="${#numbers.formatCurrency(#aggregates.sum(umaVenda.pagamentos.![valorPagamento]))}"></td>
+                        <td><a th:href="@{'/vendas/' + ${umaVenda.id}}" class="btn btn-warning">Consultar</a></td>
                     </tr>
                 </tbody>
             </table>
