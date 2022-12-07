@@ -1,0 +1,30 @@
+.nav{
+    display: flex;
+    justify-content: space-around;
+    background-color: red;
+}
+.logo{
+    text-align: center;
+    padding: 20px;
+}
+.nav div{
+    padding: 20px;
+    margin: 10px;
+}
+.nav ul{
+    text-decoration: none;
+    display: flex;
+    gap: 40px;
+    padding: 20px;
+    font-size: 1.8rem;
+}
+.nav a{
+    text-decoration: none;
+    color: black;
+}
+.nav li{
+    list-style: none;
+}
+.form-group{
+    padding: 10px;
+}

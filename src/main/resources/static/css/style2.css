@@ -1,0 +1,96 @@
+.nav{
+    display: flex;
+    justify-content: space-around;
+    background-color: red;
+    
+}
+.logo{
+    text-align: center;
+    padding: 20px;
+}
+.nav div{
+    padding: 20px;
+    margin: 10px;
+}
+.nav ul{
+    text-decoration: none;
+    display: flex;
+    gap: 40px;
+    padding: 20px;
+    font-size: 1.8rem;
+}
+.nav a{
+    text-decoration: none;
+    color: black;
+}
+.nav li{
+    list-style: none;
+}
+
+.jordan img{
+    width: 700px;
+    padding: 10px;
+}
+.shox img{
+    width: 600px;
+    padding: 10px;
+}
+.nike img{
+    width: 700px;
+}
+.preto img{
+    width: 700px;
+}
+.shox{
+    margin: 40px;
+    
+}
+.container{
+    display: grid;
+    margin: 30px;
+    grid-template-columns: 2fr 2fr;
+    grid-gap: 200px;
+    grid-template-areas:
+    'jordan  shox'
+     'nike preto   ';
+}
+.jordan h1 , strong{
+    text-align: center;
+    padding: -102px;
+}
+
+.jordan a{
+    text-align: center;
+    padding: 300px;
+    margin: 20px;
+}
+
+.shox h1 {
+    text-align: center;
+}
+.shox strong{
+    text-align: center;
+}
+
+.shox a{
+    text-align: center;
+    padding: 300px;
+    margin: 20px;
+
+}
+.nike h1 ,strong{
+    text-align: center;
+}
+.preto h1, strong{
+    text-align: center;
+}
+.nike a{
+    text-align: center;
+    padding: 300px;
+    margin: 20px;
+}
+.preto a{
+    text-align: center;
+    padding: 350px;
+    margin: 20px;
+}
