@@ -47,6 +47,6 @@ public class HomeController {
     @PostMapping(params = "form")
     public ModelAndView save(Cliente cliente){
         clienteService.save(cliente);
-        return new ModelAndView("redirect:/clientes");
+        return new ModelAndView("home/index");
     }
 }
