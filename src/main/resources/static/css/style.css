@@ -1,0 +1,60 @@
+.nav{
+    display: flex;
+    justify-content: space-around;
+    background-color: red;
+}
+.logo{
+    text-align: center;
+    padding: 20px;
+}
+.nav div{
+    padding: 20px;
+    margin: 10px;
+}
+.nav ul{
+    text-decoration: none;
+    display: flex;
+    gap: 40px;
+    padding: 20px;
+    font-size: 1.8rem;
+}
+.nav a{
+    text-decoration: none;
+    color: black;
+}
+.nav li{
+    list-style: none;
+}
+.jd img{
+    width: 700px;
+}
+.jd{
+    margin: 1px;
+    padding: 20px;
+}
+.tenisJD img{
+    width: 400px;
+}
+.tenisJD{
+    padding: 20px;
+}
+.jordan img{
+    width: 500px;
+}
+.jordan{
+    padding: 20px;
+}
+.container{
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    grid-gap: 20px;
+    grid-template-areas:
+    'jordan tenisJd'
+     'jd txt   ';
+}
+
+.txt{
+    padding: 20px;
+    text-align: center;
+
+}
