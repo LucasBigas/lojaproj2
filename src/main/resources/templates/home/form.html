@@ -3,9 +3,21 @@
 
     <head >
         <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/css/style3.css}">
     </head>
 
     <body>
+        <nav class="nav">
+            <h1 class="logo">Nike</h1>
+           
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/home/produto">Produtos</a></li>
+                <li><a href="/home/cadastro">cadastro</a></li>
+            </ul>
+        
+        </nav>
+
         <main class="container">
             <form th:action="@{/home/(form)}"
             method="POST" th:object="${cliente}"> 

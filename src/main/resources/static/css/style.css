@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-around;
     background-color: red;
+    
 }
 .logo{
     text-align: center;
@@ -54,7 +55,7 @@
 }
 
 .txt{
-    padding: 20px;
+    padding: 40px;
     text-align: center;
 
 }
